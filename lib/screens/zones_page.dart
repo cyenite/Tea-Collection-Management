@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:marquee/marquee.dart';
 import 'package:tea_logistics/config/config.dart';
+import 'package:tea_logistics/widgets/marker.dart';
 
 class ZonesPage extends StatefulWidget {
   @override
@@ -10,6 +11,9 @@ class ZonesPage extends StatefulWidget {
 }
 
 class _ZonesPageState extends State<ZonesPage> {
+  MapboxMapController _mapController;
+  List<Marker> _markers = [];
+
   @override
   Widget build(BuildContext context) {
     return Stack(

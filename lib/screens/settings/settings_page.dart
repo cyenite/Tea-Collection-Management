@@ -49,10 +49,10 @@ class _SettingsPageState extends State<SettingsPage> {
           Container(
             height: 25.0,
             width: 70.0,
-            decoration: BoxDecoration(
+            /*decoration: BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.circular(20.0),
-            ),
+            ),*/
             child: Center(
               child: Text(
                 'Billing',

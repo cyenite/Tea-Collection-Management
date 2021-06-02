@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tea_logistics/config/config.dart';
 import 'package:tea_logistics/widgets/subheader.dart';
-import 'package:tea_logistics/widgets/tabs.dart';
-import 'package:tea_logistics/widgets/zone_item_details.dart';
+import 'package:tea_logistics/widgets/trip_card.dart';
+import 'package:tea_logistics/widgets/zone_card.dart';
 import 'package:tea_logistics/widgets/zone_statistics_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,15 +33,59 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Tabs(),
+            //Tabs(),
             Container(
               margin: EdgeInsets.only(top: 5.0),
               height: 200.0,
-              width: MediaQuery.of(context).size.width * 0.62,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [],
+              width: MediaQuery.of(context).size.width,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ZoneCard(
+                      timeAgo: '12/04/2021',
+                      zoneName: 'Kapchebet',
+                      trips: 54,
+                      color: Colors.red,
+                      percentComplete: 100,
+                      progressIndicatorColor: primaryColor,
+                    ),
+                    ZoneCard(
+                      timeAgo: '12/04/2021',
+                      zoneName: 'Nakuru',
+                      trips: 0,
+                      color: Colors.green,
+                      percentComplete: 100,
+                      progressIndicatorColor: primaryColor,
+                    ),
+                    ZoneCard(
+                      timeAgo: '12/04/2021',
+                      zoneName: 'Jamjii',
+                      trips: 11,
+                      color: Colors.blue,
+                      percentComplete: 100,
+                      progressIndicatorColor: primaryColor,
+                    ),
+                    ZoneCard(
+                      timeAgo: '12/04/2021',
+                      zoneName: 'Kabianga',
+                      trips: 46,
+                      color: Colors.blueGrey,
+                      percentComplete: 100,
+                      progressIndicatorColor: primaryColor,
+                    ),
+                    ZoneCard(
+                      timeAgo: '12/04/2021',
+                      zoneName: 'Kibingei',
+                      trips: 23,
+                      color: Colors.yellow,
+                      percentComplete: 100,
+                      progressIndicatorColor: primaryColor,
+                    ),
+                  ],
+                ),
               ),
             ),
             SubHeader(
@@ -48,26 +93,26 @@ class _HomePageState extends State<HomePage> {
             ),
             Column(
               children: [
-                ZoneItem(
+                Trips(
                   color: Color(0xffFF4C60),
-                  vehicles: '21',
+                  zone: 'Cheptigit',
                   date: '12/02/2021',
-                  transits: '456',
-                  title: 'Kabianga Zone',
+                  ratings: '3.5',
+                  status: 'Incomplete',
                 ),
-                ZoneItem(
+                Trips(
                   color: Color(0xff6C6CE5),
-                  vehicles: '21',
+                  zone: 'Kabianga',
                   date: '12/02/2021',
-                  transits: '45',
-                  title: 'Kericho West',
+                  ratings: '4.5',
+                  status: 'Ongoing',
                 ),
-                ZoneItem(
+                Trips(
                   color: Color(0xffFAAA1E),
-                  vehicles: '21',
+                  zone: 'Jamjii',
                   date: '12/02/2021',
-                  transits: '34',
-                  title: 'Jamjii',
+                  ratings: '5.0',
+                  status: 'Complete',
                 ),
               ],
             ),

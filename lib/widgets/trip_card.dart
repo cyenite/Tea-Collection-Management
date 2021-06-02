@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ZoneItem extends StatefulWidget {
-  final String title;
+class Trips extends StatefulWidget {
+  final String zone;
   final Color color;
-  final String vehicles;
+  final String status;
   final String date;
-  final String transits;
+  final String ratings;
 
-  ZoneItem({
+  Trips({
     this.color,
     this.date,
-    this.transits,
-    this.vehicles,
-    this.title,
+    this.ratings,
+    this.status,
+    this.zone,
   });
 
   @override
-  _ZoneItemState createState() => _ZoneItemState();
+  _TripsState createState() => _TripsState();
 }
 
-class _ZoneItemState extends State<ZoneItem> {
+class _TripsState extends State<Trips> {
   bool hovered = false;
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class _ZoneItemState extends State<ZoneItem> {
                         width: 15.0,
                       ),
                       Text(
-                        widget.title,
+                        widget.zone,
                         style: GoogleFonts.quicksand(
                           fontWeight: FontWeight.bold,
                           fontSize: 12.0,
@@ -95,7 +95,7 @@ class _ZoneItemState extends State<ZoneItem> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 30.0),
                         child: Text(
-                          widget.vehicles + 'vehicles',
+                          widget.status + 'status',
                           style: GoogleFonts.quicksand(
                             fontWeight: FontWeight.bold,
                             fontSize: 11.0,
@@ -117,7 +117,7 @@ class _ZoneItemState extends State<ZoneItem> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 30.0),
                         child: Text(
-                          widget.transits + 'transits',
+                          widget.ratings + 'ratings',
                           style: GoogleFonts.quicksand(
                             fontWeight: FontWeight.bold,
                             fontSize: 11.0,

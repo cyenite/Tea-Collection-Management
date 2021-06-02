@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tea_logistics/config/config.dart';
 import 'package:tea_logistics/screens/navigation_page.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Tea Logistics',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Color(0xFF17794F),
+        primaryColor: primaryColor,
       ),
       home: NavigationPage(),
     );

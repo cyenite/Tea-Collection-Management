@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tea_logistics/screens/settings_page.dart';
+import 'settings/settings_page.dart';
 import 'package:tea_logistics/screens/users_page.dart';
 import 'package:tea_logistics/screens/zones_page.dart';
 import 'package:tea_logistics/widgets/company_name.dart';

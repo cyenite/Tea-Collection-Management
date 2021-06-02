@@ -9,12 +9,12 @@ import 'package:tea_logistics/config/config.dart';
 
 const randomMarkerNum = 100;
 
-class ZonesPage extends StatefulWidget {
+class ZoneActivities extends StatefulWidget {
   @override
-  _ZonesPageState createState() => _ZonesPageState();
+  _ZoneActivitiesState createState() => _ZoneActivitiesState();
 }
 
-class _ZonesPageState extends State<ZonesPage> {
+class _ZoneActivitiesState extends State<ZoneActivities> {
   final Random _rnd = new Random();
 
   MapboxMapController _mapController;

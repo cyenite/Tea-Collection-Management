@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Trips extends StatefulWidget {
+class ZoneListingContainer extends StatefulWidget {
   final String zone;
   final Color color;
-  final String status;
   final String date;
-  final String ratings;
+  final String vehicles;
 
-  Trips({
+  ZoneListingContainer({
     this.color,
     this.date,
-    this.ratings,
-    this.status,
+    this.vehicles,
     this.zone,
   });
 
   @override
-  _TripsState createState() => _TripsState();
+  _ZoneListingContainerState createState() => _ZoneListingContainerState();
 }
 
-class _TripsState extends State<Trips> {
+class _ZoneListingContainerState extends State<ZoneListingContainer> {
   bool hovered = false;
   @override
   Widget build(BuildContext context) {
@@ -71,8 +69,8 @@ class _TripsState extends State<Trips> {
                         ),
                         child: Center(
                           child: Icon(
-                            Icons.folder,
-                            color: Colors.blue,
+                            Icons.business,
+                            color: Colors.green,
                             size: 15.0,
                           ),
                         ),
@@ -95,17 +93,6 @@ class _TripsState extends State<Trips> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 30.0),
                         child: Text(
-                          'Status' + widget.status,
-                          style: GoogleFonts.quicksand(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11.0,
-                            color: Colors.black45,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Text(
                           widget.date,
                           style: GoogleFonts.quicksand(
                             fontWeight: FontWeight.bold,
@@ -117,7 +104,7 @@ class _TripsState extends State<Trips> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 30.0),
                         child: Text(
-                          widget.ratings + ' ratings',
+                          widget.vehicles + 'vehicles',
                           style: GoogleFonts.quicksand(
                             fontWeight: FontWeight.bold,
                             fontSize: 11.0,

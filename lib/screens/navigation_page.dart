@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'settings/settings_page.dart';
-import 'package:tea_logistics/screens/users_page.dart';
-import 'package:tea_logistics/screens/zones_page.dart';
+import 'package:tea_logistics/screens/zone_management_page.dart';
+import 'package:tea_logistics/screens/zones_activities.dart';
 import 'package:tea_logistics/widgets/company_name.dart';
 import 'package:tea_logistics/widgets/nav_bar_item.dart';
 
@@ -17,8 +17,8 @@ class _NavigationPageState extends State<NavigationPage> {
   List<bool> selected = [true, false, false, false];
   List<Widget> _screens = [
     HomePage(),
-    ZonesPage(),
-    UserPage(),
+    ZoneActivities(),
+    ZoneManagement(),
     SettingsPage(),
   ];
 
@@ -73,7 +73,7 @@ class _NavigationPageState extends State<NavigationPage> {
                               },
                             ),
                             NavBarItem(
-                              icon: Icons.assistant,
+                              icon: Icons.map,
                               active: selected[1],
                               touched: () {
                                 setState(() {
@@ -83,7 +83,7 @@ class _NavigationPageState extends State<NavigationPage> {
                               },
                             ),
                             NavBarItem(
-                              icon: Icons.person,
+                              icon: Icons.business,
                               active: selected[2],
                               touched: () {
                                 setState(() {

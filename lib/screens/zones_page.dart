@@ -1,9 +1,13 @@
+import 'dart:html';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:marquee/marquee.dart';
 import 'package:tea_logistics/config/config.dart';
-import 'package:tea_logistics/widgets/marker.dart';
+
+const randomMarkerNum = 100;
 
 class ZonesPage extends StatefulWidget {
   @override
@@ -11,14 +15,63 @@ class ZonesPage extends StatefulWidget {
 }
 
 class _ZonesPageState extends State<ZonesPage> {
+  final Random _rnd = new Random();
+
   MapboxMapController _mapController;
   List<Marker> _markers = [];
+  List<_MarkerState> _markerStates = [];
+
+  void _addMarkerStates(_MarkerState markerState) {
+    _markerStates.add(markerState);
+  }
+
+  void _onMapCreated(MapboxMapController controller) {
+    _mapController = controller;
+    controller.addListener(() {
+      if (controller.isCameraMoving) {
+        _updateMarkerPosition();
+      }
+    });
+  }
+
+  void _onStyleLoadedCallback() {
+    print('onStyleLoadedCallback');
+  }
+
+  void _onMapLongClickCallback(Point<double> point, LatLng coordinates) {
+    _addMarker(point, coordinates);
+  }
+
+  void _onCameraIdleCallback() {
+    _updateMarkerPosition();
+  }
+
+  void _updateMarkerPosition() {
+    final coordinates = <LatLng>[];
+
+    for (final markerState in _markerStates) {
+      coordinates.add(markerState.getCoordinate());
+    }
+
+    _mapController.toScreenLocationBatch(coordinates).then((points) {
+      _markerStates.asMap().forEach((i, value) {
+        _markerStates[i].updatePosition(points[i]);
+      });
+    });
+  }
+
+  void _addMarker(Point<double> point, LatLng coordinates) {
+    setState(() {
+      _markers.add(Marker(_rnd.nextInt(100000).toString(), coordinates, point,
+          _addMarkerStates));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Positioned.fill(
+        /*Positioned.fill(
           child: MapboxMap(
             accessToken:
                 'pk.eyJ1IjoiYWFya2lwIiwiYSI6ImNrbzh0b2l0eDBiajAycnFtZ2xwdTdhZGwifQ.BL8ZtdHeXXRAMlas2zPxSQ',
@@ -27,7 +80,24 @@ class _ZonesPageState extends State<ZonesPage> {
               zoom: 9,
             ),
           ),
+        ),*/
+        MapboxMap(
+          accessToken:
+              'pk.eyJ1IjoiYWFya2lwIiwiYSI6ImNrbzh0b2l0eDBiajAycnFtZ2xwdTdhZGwifQ.BL8ZtdHeXXRAMlas2zPxSQ',
+          trackCameraPosition: true,
+          onMapCreated: _onMapCreated,
+          onMapLongClick: _onMapLongClickCallback,
+          onCameraIdle: _onCameraIdleCallback,
+          onStyleLoadedCallback: _onStyleLoadedCallback,
+          initialCameraPosition: const CameraPosition(
+              target: LatLng(-0.36447231406911507, 35.272096629677485),
+              zoom: 9),
         ),
+        IgnorePointer(
+            ignoring: true,
+            child: Stack(
+              children: _markers,
+            )),
         Align(
           alignment: Alignment.topCenter,
           child: Container(
@@ -59,6 +129,24 @@ class _ZonesPageState extends State<ZonesPage> {
                 suffixIcon: InkWell(
                   onTap: () {
                     print('Search icon tapped');
+                    //_measurePerformance();
+
+                    // Generate random markers
+                    var param = <LatLng>[];
+                    for (var i = 0; i < randomMarkerNum; i++) {
+                      final lat = _rnd.nextDouble() * 20 + 30;
+                      final lng = _rnd.nextDouble() * 20 + 125;
+                      param.add(
+                          LatLng(-0.36447231406911507, 35.272096629677485));
+                    }
+
+                    _mapController.toScreenLocationBatch(param).then((value) {
+                      for (var i = 0; i < randomMarkerNum; i++) {
+                        var point = Point<double>(
+                            value[i].x as double, value[i].y as double);
+                        _addMarker(point, param[i]);
+                      }
+                    });
                   },
                   child: Container(
                     padding: EdgeInsets.all(defaultPadding * 0.75),
@@ -77,5 +165,74 @@ class _ZonesPageState extends State<ZonesPage> {
         ),
       ],
     );
+  }
+}
+
+class Marker extends StatefulWidget {
+  final Point _initialPosition;
+  final LatLng _coordinate;
+  final void Function(_MarkerState) _addMarkerState;
+
+  Marker(
+      String key, this._coordinate, this._initialPosition, this._addMarkerState)
+      : super(key: Key(key));
+
+  @override
+  State<StatefulWidget> createState() {
+    final state = _MarkerState(_initialPosition);
+    _addMarkerState(state);
+    return state;
+  }
+}
+
+class _MarkerState extends State with TickerProviderStateMixin {
+  final _iconSize = 20.0;
+
+  Point _position;
+
+  AnimationController _controller;
+  Animation<double> _animation;
+
+  _MarkerState(this._position);
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 6),
+      vsync: this,
+    )..repeat(reverse: true);
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.elasticOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var ratio = 1.0;
+    return Positioned(
+        left: _position.x / ratio - _iconSize / 2,
+        top: _position.y / ratio - _iconSize / 2,
+        child: RotationTransition(
+            turns: _animation,
+            child:
+                Image.asset('assets/images/car.png', height: _iconSize * 2)));
+  }
+
+  void updatePosition(Point<num> point) {
+    setState(() {
+      _position = point;
+    });
+  }
+
+  LatLng getCoordinate() {
+    return (widget as Marker)._coordinate;
   }
 }

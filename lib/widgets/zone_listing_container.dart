@@ -104,7 +104,7 @@ class _ZoneListingContainerState extends State<ZoneListingContainer> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 30.0),
                         child: Text(
-                          widget.vehicles + 'vehicles',
+                          widget.vehicles + ' Vehicles',
                           style: GoogleFonts.quicksand(
                             fontWeight: FontWeight.bold,
                             fontSize: 11.0,

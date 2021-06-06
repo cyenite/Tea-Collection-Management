@@ -16,6 +16,8 @@ class ZoneActivities extends StatefulWidget {
 
 class _ZoneActivitiesState extends State<ZoneActivities> {
   final Random _rnd = new Random();
+  double _latitude = -0.36447231406911507;
+  double _longitude = 35.272096629677485;
 
   MapboxMapController _mapController;
   List<Marker> _markers = [];
@@ -136,8 +138,9 @@ class _ZoneActivitiesState extends State<ZoneActivities> {
                     for (var i = 0; i < randomMarkerNum; i++) {
                       final lat = _rnd.nextDouble() * 20 + 30;
                       final lng = _rnd.nextDouble() * 20 + 125;
-                      param.add(
-                          LatLng(-0.36447231406911507, 35.272096629677485));
+                      param.add(LatLng(_latitude, _longitude));
+                      _latitude = _latitude + 0.2;
+                      _longitude = _longitude + 0.2;
                     }
 
                     _mapController.toScreenLocationBatch(param).then((value) {

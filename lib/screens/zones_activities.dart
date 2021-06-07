@@ -139,8 +139,6 @@ class _ZoneActivitiesState extends State<ZoneActivities> {
                       final lat = _rnd.nextDouble() * 20 + 30;
                       final lng = _rnd.nextDouble() * 20 + 125;
                       param.add(LatLng(_latitude, _longitude));
-                      _latitude = _latitude + 0.2;
-                      _longitude = _longitude + 0.2;
                     }
 
                     _mapController.toScreenLocationBatch(param).then((value) {

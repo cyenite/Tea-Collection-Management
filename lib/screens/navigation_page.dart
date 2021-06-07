@@ -1,11 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'settings/settings_page.dart';
+import 'package:get/get.dart';
+import 'package:tea_logistics/config/config.dart';
 import 'package:tea_logistics/screens/zone_management_page.dart';
 import 'package:tea_logistics/screens/zones_activities.dart';
 import 'package:tea_logistics/widgets/company_name.dart';
 import 'package:tea_logistics/widgets/nav_bar_item.dart';
 
 import 'home_page.dart';
+import 'landing_page.dart';
+import 'settings/settings_page.dart';
 
 class NavigationPage extends StatefulWidget {
   @override
@@ -36,10 +40,32 @@ class _NavigationPageState extends State<NavigationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Container(
+          margin: EdgeInsets.only(left: 15.0),
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
+            gradient: LinearGradient(
+                colors: [MyColors.blue1, MyColors.blue2],
+                begin: Alignment.bottomRight,
+                end: Alignment.topLeft),
+          ),
+          child: Center(
+            child: Image.asset('assets/images/logo.png'),
+          ),
+        ),
         title: Text('Tea Collection Management Portal'),
         centerTitle: true,
         actions: [
-          Icon(Icons.logout),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+                onTap: () {
+                  Get.off(LandingPage());
+                },
+                child: Icon(Icons.logout)),
+          ),
         ],
       ),
       body: Container(
@@ -52,7 +78,7 @@ class _NavigationPageState extends State<NavigationPage> {
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 width: 100.0,
-                color: Color(0xFF17794F),
+                color: Color(0xFF15682D),
                 child: Stack(
                   children: [
                     CompanyName(),

@@ -23,7 +23,7 @@ class Strings {
   static const String loginButton = "Login";
   static const String hello = "Hello!";
   static const String welcomeTo = "Let's ";
-  static const String ftf = "Manage tea production together!";
+  static const String ftf = "Manage tea transportation together!";
   static const String subscribeText =
       "Subscribe to request for system integration";
   static const String email_hint = "Email address";

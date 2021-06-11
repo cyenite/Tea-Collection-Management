@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tea_logistics/config/config.dart';
@@ -40,7 +41,39 @@ class _HomePageState extends State<HomePage> {
               width: MediaQuery.of(context).size.width,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(
+                child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection("zones")
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      print('snapshot: ${snapshot.data}');
+                      if (snapshot.hasData && snapshot.data != null) {
+                        final docs = snapshot.data.docs;
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: docs.length,
+                          itemBuilder: (context, index) {
+                            final station = docs[index].data();
+                            return ZoneCard(
+                              timeAgo: station['createdAt'],
+                              zoneName: station['name'],
+                              trips: station['trips'],
+                              color: Colors.red,
+                              percentComplete: 100,
+                              progressIndicatorColor: primaryColor,
+                            );
+                          },
+                        );
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    }),
+                /*Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -85,11 +118,11 @@ class _HomePageState extends State<HomePage> {
                       progressIndicatorColor: primaryColor,
                     ),
                   ],
-                ),
+                ),*/
               ),
             ),
             SubHeader(
-              title: 'Zones',
+              title: 'Trips',
             ),
             Column(
               children: [

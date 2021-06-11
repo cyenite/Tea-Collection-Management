@@ -34,6 +34,10 @@ dependencies:
   percent_indicator: ^2.1.8
   flutter_svg: any
   marquee: ^2.1.0
+  lit_firebase_auth: ^0.3.0
+  firebase_core: any
+  geo_firestore_flutter: any
+  cloud_firestore: any
 
 dev_dependencies:
   flutter_test:

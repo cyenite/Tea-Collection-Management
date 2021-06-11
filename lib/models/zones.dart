@@ -8,13 +8,18 @@ class Zone {
   final int percentComplete;
   final IconData icon;
   final int trips;
+  final double latitude;
+  final double longitude;
+
   Zone({
     @required this.timeAgo,
-    @required this.color,
-    @required this.progressIndicatorColor,
-    @required this.percentComplete,
+    this.color,
+    this.progressIndicatorColor,
+    this.percentComplete,
     @required this.zoneName,
-    @required this.icon,
+    this.icon,
+    @required this.longitude,
+    @required this.latitude,
     @required this.trips,
   });
 }

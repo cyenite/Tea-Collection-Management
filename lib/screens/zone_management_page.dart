@@ -138,7 +138,9 @@ class _ZoneManagementState extends State<ZoneManagement> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () async {},
+                  onTap: () {
+                    addZoneDialog();
+                  },
                   child: Container(
                     padding: EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
